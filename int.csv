@@ -1,0 +1,63 @@
+id,indication,n,n_good,pct
+12 Lead ECG - Obtained,All,11274,0,0
+Acetaminophen (Tylenol),All,185,34,18.4
+Adenosine,All,119,50,42
+Airway - BVM,All,52,0,0
+Airway-Nasal,All,284,0,0
+Airway-Oral,All,131,0,0
+Albuterol,All,1809,1456,80.5
+Amiodarone,All,94,19,20.2
+Aspirin,All,2123,366,17.2
+Atropine,All,72,32,44.4
+BIAD - King,All,238,0,0
+Bleeding Controlled,All,1102,0,0
+Calcium Chloride,All,56,3,5.4
+Cardioversion,All,18,9,50
+Chest Decompression,All,29,0,0
+Cold Pack,All,948,465,49.1
+CPAP,All,118,0,0
+CPR,All,99,59,59.6
+Cricothyrotomy,All,1,0,0
+Defibrillation,All,316,21,6.6
+Dextrose 10%,All,291,272,93.5
+Diazepam (Valium),All,28,23,82.1
+Diltiazem (Cardizem),All,74,50,67.6
+Diphenhydramine (Benadryl),All,271,179,66.1
+Dopamine,All,21,13,61.9
+ED Notification,All,1051,0,0
+"Epinephrine 1:1,000",All,128,93,72.7
+"Epinephrine 1:10,000",All,1313,138,10.5
+Epinephrine Drip,All,11,8,72.7
+EtCO2,All,1061,0,0
+External Cardiac Pacing,All,61,32,52.5
+Fentanyl,All,377,0,0
+Glucagon,All,125,88,70.4
+Haloperidol (Haldol),All,79,54,68.4
+Hot Pack,All,60,47,78.3
+Ibuprofin (Motrin),All,213,53,24.9
+Induced Hypothermia,All,28,0,0
+Intubation,All,259,0,0
+Irrigation,All,59,0,0
+IV/IO,All,19202,0,0
+Ketorolac (Toradol),All,413,305,73.8
+Lidocaine,All,2,1,50
+Magnesium Sulfate,All,43,32,74.4
+Methylprednisolone,All,435,212,48.7
+Midazolam (Versed),All,492,352,71.5
+Morphine Sulfate,All,3355,2332,69.5
+NA,All,1,0,0
+Naloxone (Narcan),All,401,219,54.6
+NG/OG Tube,All,19,0,0
+Nitroglycerin,All,3029,1856,61.3
+OB Delivery,All,7,7,100
+Ondansetron (Zofran),All,1141,852,74.7
+Open Airway,All,30,20,66.7
+Oral Glucose,All,233,135,57.9
+Oxygen,All,6462,3569,55.2
+Oxymetazoline (Afrin),All,54,31,57.4
+Restraints,All,89,0,0
+Sodium Bicarbonate,All,199,35,17.6
+Spinal Immobilization,All,2389,0,0
+Splinting,All,497,0,0
+Suction,All,330,264,80
+Vagal Maneuver,All,39,5,12.8

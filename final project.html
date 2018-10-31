@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+    <!--.bar rect {fill: steelblue; } -->
+    .text-label text {fill: red;font: 10px sans-serif;}
+	.databox { background-color:#EEE; margin:5px; float: left; padding:5px; overflow: auto;}
+	#indications_viz {width:350px; min-height:400px;}
+	#interventions_viz {width:350px; min-height:400px;}
+	#note_box {width:350px; min-height:400px;}
+	.small_bar_viz {width:250px; min-height:150px;}
+	.big_bar_viz {min-width:800px; min-height:200px;}
+	.clearfix::after {content:""; clear:both; display:table;}
+	.vizrow{overflow:auto;}
+	h3{}
+	.notes{font-style:italic; font-size:small;}
+	.bar:hover {fill: yellow;}
+	div.tooltip {
+		position: absolute;
+		text-align: center;
+		width: 150px;
+		/*height: 28px;         */
+		padding: 2px;
+		font: 12px sans-serif;
+		background: lightgrey;
+		border: 0px;
+		border-radius: 8px;
+		pointer-events: none;
+	}
+	.dot:hover {fill: yellow;}
+</style>
+<body>
+<h2>EMS Flows: Indication ► Intervention ► Result </h2>
+<p>When Orange County EMS is called, they need to quickly ascertain health states (<strong>indications</strong>) and apply <strong>interventions</strong> to get <strong>results </strong>representing improved states. Focusing on interventions, we might consider the number of interventions over time, the percent of those intervention results that are good, and whether those interventions are uniquely periodic - whether the distribution over any repeating period (e.g. month of year, day of week, or time of day) have unique distributions. </p>
+<p>Select a intervention:
+    <select id="int_select" onChange="shared_data.applyFilter(this.options[this.selectedIndex].value);">
+        <option value="All">_All Interventions_</option>
+        <option value='IV/IO'>IV/IO (1)</option>
+        <option value='12 Lead ECG - Obtained'>12 Lead ECG - Obtained (2)</option>
+        <option value='Acetaminophen (Tylenol)'>Acetaminophen (Tylenol) (31)</option>
+        <option value='Adenosine'>Adenosine (32)</option>
+        <option value='Airway-Nasal'>Airway-Nasal (25)</option>
+        <option value='Airway-Oral'>Airway-Oral (36)</option>
+        <option value='Albuterol'>Albuterol (8)</option>
+        <option value='Amiodarone'>Amiodarone (39)</option>
+        <option value='Aspirin'>Aspirin (7)</option>
+        <option value='Atropine'>Atropine (40)</option>
+        <option value='BIAD - King'>BIAD - King (29)</option>
+        <option value='Bleeding Controlled'>Bleeding Controlled (10)</option>
+        <option value='Cold Pack'>Cold Pack (14)</option>
+        <option value='CPAP'>CPAP (35)</option>
+        <option value='Defibrillation'>Defibrillation (22)</option>
+        <option value='Dextrose 10%'>Dextrose 10% (21)</option>
+        <option value='Diphenhydramine (Benadryl)'>Diphenhydramine (Benadryl) (23)</option>
+        <option value='ED Notification'>ED Notification (13)</option>
+        <option value='Epinephrine 1:1,000'>Epinephrine 1:1,000 (33)</option>
+        <option value='Epinephrine 1:10,000'>Epinephrine 1:10,000 (12)</option>
+        <option value='EtCO2'>EtCO2 (11)</option>
+        <option value='Fentanyl'>Fentanyl (20)</option>
+        <option value='Glucagon'>Glucagon (34)</option>
+        <option value='Haloperidol (Haldol)'>Haloperidol (Haldol) (37)</option>
+        <option value='Ibuprofin (Motrin)'>Ibuprofin (Motrin) (28)</option>
+        <option value='Intubation'>Intubation (27)</option>
+        <option value='Ketorolac (Toradol)'>Ketorolac (Toradol) (19)</option>
+        <option value='Methylprednisolone'>Methylprednisolone (17)</option>
+        <option value='Midazolam (Versed)'>Midazolam (Versed) (16)</option>
+        <option value='Morphine Sulfate'>Morphine Sulfate (4)</option>
+        <option value='Naloxone (Narcan)'>Naloxone (Narcan) (18)</option>
+        <option value='Nitroglycerin'>Nitroglycerin (5)</option>
+        <option value='Ondansetron (Zofran)'>Ondansetron (Zofran) (9)</option>
+        <option value='Oral Glucose'>Oral Glucose (26)</option>
+        <option value='Oxygen'>Oxygen (3)</option>
+        <option value='Restraints'>Restraints (38)</option>
+        <option value='Sodium Bicarbonate'>Sodium Bicarbonate (30)</option>
+        <option value='Spinal Immobilization'>Spinal Immobilization (6)</option>
+        <option value='Splinting'>Splinting (15)</option>
+        <option value='Suction'>Suction (24)</option>
+    </select>
+<br><font size="-3">Interventions (with n>40) listed alphabetally, with n-rank in parenthses. Data from Orange EMS with permission.</font></p>
+<!-- create rough shapes here -->
+<div class="vizrow">
+	<div id="indications_viz" class="databox">
+        <h3>All Interventions</h3>
+        <svg id="dot_vis_a_svg"></svg>
+        <p class="notes">Select an intervention by clicking in this box or the dropdown, aboveto filter indications in second box. <BR>Rachel: can we speed this up or make instantaneous? Filtering before finished causes bug.</p>
+    </div>
+	<div id="interventions_viz" class="databox">
+	    <h3>Indications for Intervention</h3>
+        <svg id="dot_vis_b_svg"></svg>
+        <p class="notes">Indications Notes. Show all indications for given intervention, colored by %good outcomes (best fit), size by n. Size is breaking here.</p>
+    </div>
+   	<div id="note_box" class="clearfix databox">
+	    <h3>Example stories</h3>
+        <ul>
+        	<li><strong>Naloxone</strong>: More effective with obvious overdose than generic unconscious. <a href="#" onClick="document.getElementById('int_select').value = 'Naloxone (Narcan)';shared_data.applyFilter('Naloxone (Narcan)');">(view)</a></li>
+            <li><strong>Zofran</strong>: Increased over time. <a href="#" onClick="document.getElementById('int_select').value = 'Ondansetron (Zofran)';shared_data.applyFilter('Ondansetron (Zofran)');">(view)</a></li>
+            <li><strong>Oxygen</strong>: Decreased over time. <a href="#" onClick="document.getElementById('int_select').value = 'Oxygen';shared_data.applyFilter('Oxygen');">(view)</a></li>
+            <li><strong>Aspirin</strong>: Popular mid-week and mid-day, decreasing. <a href="#" onClick="document.getElementById('int_select').value = 'Aspirin';shared_data.applyFilter('Aspirin');">(view)</a></li>
+        </ul>
+        <br>
+        <!--Technique from David and http://jsfiddle.net/gN3ke/ -->
+    </div>
+</div>
+<div class="vizrow">
+    <div id="bars_all" class="big_bar_viz databox">
+    	<h3>Time Trend (Overall, Monthly)</h3>
+        <svg id="bars_all_svg"></svg>
+    </div>
+</div>
+<div class="vizrow">
+    <div id="bars_years" class="small_bar_viz databox">
+       	<h3>Year</h3>
+		<svg id="bars_year_svg"></svg> 
+	</div>
+    <div id="bars_monthofyear" class="small_bar_viz databox">
+       	<h3>Month of Year</h3>
+		<svg id="bars_monthofyear_svg"></svg> 
+	</div>
+    <div id="bars_dayofweek" class="small_bar_viz databox">
+       	<h3>Day of Week</h3>
+		<!-- <p>Future svg goes here.</p> -->
+		<svg id="bars_dayofweek_svg"></svg> 
+	</div>
+    <div id="bars_timeofday" class="small_bar_viz databox">
+       	<h3>Time of Day</h3>
+		<svg id="bars_timeofday_svg"></svg> 
+	</div>
+	<p class="notes" style="clear:both"><strong>Visualization Notes / Improvements</strong></p>
+	<p class="notes">Data:(1) Date-time stamps are of a mixed format (m/d/y and d/m/y), yuck, meaning this is just 23k records with valid, consistent date-times, about half of the real data. (2) Successfully/unsuccessful (IV/IO, 12 lead, spinal, etc02, ED notif. - any with zero.) not coded correctly, should be "improved"</p>
+    <p class="notes">Next steps for mike: Data quality needs serious review. Get a smarter color scale and selector. Could create a text-viz or be smarter about stats.</p>
+    <p class="notes">Could also save an array of narrations and apply them with the same filter to help with "curation."</p>
+    <p class="notes">I don't love the mouseover or min-max colors, but it's something. I'd prefer to have proper mouseover pop-ups like above.</p>
+    <p class="notes">Numbers aren't legible on bottom graphs.</p>
+    <p></p>
+</div>
+
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<script>
+	//get day of week, here: https://www.w3schools.com/jsref/jsref_getday.asp 
+	// use that with mbostock's work on categoricals: https://bost.ocks.org/mike/bar/3/
+	
+    //reference https://bl.ocks.org/mbostock/b2fee5dae98555cf78c9e4c5074b87c3
+	//var parseDate = d3.timeParse("%m/%d/%Y"); //moved to datetime stamp
+	var parseDate = d3.timeParse("%m/%d/%Y %H:%M"); //moved to datetime stamp
+
+	//................................................
+	// sharedData (model & controller)
+	//................................................
+
+	function sharedData(vis_array){ //effectively the model. extend with other d3.csv calls and accessor functions.
+		var bar_vis = vis_array[0];
+		var year_vis = vis_array[1];
+		var month_vis = vis_array[2];
+		var day_vis = vis_array[3];
+		var time_vis = vis_array[4];
+		var dot_vis_a = vis_array[5];
+		var dot_vis_b = vis_array[6];
+		
+		var this_data = this; //sneaky pass by ref thing going on, I guess. Confused.
+		d3.csv("sample4.csv", 
+			function (d) {
+				d.date = parseDate(d.date); //old code
+				return(d);
+			}, 
+			function(error, data) {
+				if (error) {throw error;} 
+				else{
+					console.log("Loaded " + data.length + " records.")
+					//this_data.data = data; //hold onto the data - or try!
+					this_data.data = data;
+					//this_data = data.map(function(d){ d["day"] = d.getDay()+1; return(d);});
+					//could nest my data here
+					//could nest other d3.csvs in here.
+					bar_vis.render("All", this_data.data); //needs an ID here
+					year_vis.render("All", this_data.data); //more renderers go here?
+					monthofyear_vis.render("All", this_data.data); //more renderers go here?
+					dayofweek_vis.render("All", this_data.data); //more renderers go here?
+					timeofday_vis.render("All", this_data.data); //more renderers go here?
+					
+					//second csv. nested.
+					d3.csv("int.csv", 
+						   function(d){ return d;}, 
+						   function(error, data2){
+							   if (error) {throw error;} 
+							   else{
+								   console.log("Loaded "+data2.length+" int records.")
+								   this_data.int_data = data2;
+								   dot_vis_a.render("All", this_data.int_data);
+								   
+									d3.csv("int_ind.csv", 
+										   function(d){ return d;}, 
+										   function(error, data3){
+											   if (error) {throw error;} 
+											   else{
+												   console.log("Loaded "+data3.length+" int records.")
+												   this_data.intind_data = data3;
+												   dot_vis_b.render("All", this_data.intind_data );
+											   }
+										   }
+									)
+								}
+							}
+					)
+				}
+			}
+		);
+		this.applyFilter = function(filter){
+			//could filter their data here instead...
+			bar_vis.render(filter, this_data.data); //more renderers go here?
+
+			year_vis.render(filter, this_data.data); //more renderers go here?
+			monthofyear_vis.render(filter, this_data.data); //more renderers go here?
+			dayofweek_vis.render(filter, this_data.data); //more renderers go here?
+			timeofday_vis.render(filter, this_data.data); //more renderers go here?
+			
+			dot_vis_a.render(filter, this_data.int_data);
+			dot_vis_b.render(filter, this_data.intind_data);
+			//dot_vis_ind.render("All", this_data.int_data);
+			
+		}
+	};
+
+	//................................................
+	// barVisMaker - original. 
+	// Duplicative: Integrate with new version if I have time, otherwise it's just sadly duplicative code.
+	//................................................
+
+    function barVisMaker (vis_id){ //stop using global data and use passed data
+		
+		formatCount = d3.format(",.0f");
+		var margin = {top: 10, right: 20, bottom: 20, left: 20}; //weird syntax.... height and width?
+		var width = 1000 - margin.left - margin.right; // better to get these from css than hard code...
+		var height = 120 - margin.top - margin.bottom;
+	
+		var x = d3.scaleTime()
+			.domain([new Date(2014, 0, 1), new Date(2017, 11, 31)])
+			.rangeRound([0, width]);
+	
+		var y = d3.scaleLinear()
+			.range([height, 0]);
+	
+		var histogram = d3.histogram()
+			.value(function(d) { return d.date; })
+			.domain(x.domain())
+			.thresholds(x.ticks(d3.timeMonth)); //instance specific!!
+
+		
+		//need to generalize this
+		var svg = d3.select('#'+vis_id) //find svg of interest
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+		svg.append("g")
+			.attr("class", "axis axis--x")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x));		
+
+		this.render = function(_subset, data){
+			console.log(_subset);
+			//be smarter here. create a render_all_viz function, then move d3.csv to bottom
+	
+			//if else on "all" goes here
+			if(_subset == "All"){ var data_subset=data; }
+			else { var data_subset=data.filter(function(d){return (d.id==_subset);});}
+
+			var bins = histogram(data_subset); //fix histogram or drop with nest
+	
+			y.domain([0, d3.max(bins, function(d) { return d.length; })+30]);
+	
+			var bar = svg.selectAll(".bar") //select all bars in my svg
+				.remove()
+				.exit()
+				.data(bins, function (d) {return _subset;});
+	
+			bar.enter().append("rect")
+				.attr("x1", function(d){return d.x1})
+			.attr("x0", function(d){return d.x0})
+				.attr("class", "bar")
+				.attr("width", function(d) { return (x(d.x1)-x(d.x0))*0.9; })
+				.attr("height", function(d) { return height-y(d.length); })
+				.attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+				//.attr("fill",function(){return "rgb(251,180,174)";}) //old color, pink
+				.attr("fill",function(){return "#39F";}) // light blue
+				.transition().duration(500);
+				
+			var label=svg.selectAll(".text-label")
+				.remove()
+				.exit()
+				.data(bins, function (d) { return _subset;});
+	
+			label.enter().append("text")
+				.attr("class","text-label")
+				.attr("x", function(d) { return (x(d.x1) - x(d.x0)) / 2; })
+				.attr("y", 6)
+				.attr("transform",function(d){return "translate(" + x(d.x0) + "," + y(d.length) + ")";})
+				.transition().duration(500)
+				//.attr("y", function(d) {return(y(d.length + 6));})
+				.attr("dy", "-1em") //what is this for?
+				.attr("text-anchor", "middle")
+				.attr("font-size",9)
+				.attr("fill","#006")
+				.text(function(d) { return formatCount(d.length); });
+
+
+
+			label.exit()
+				.remove();
+				
+			bar.exit()
+				.remove();
+		}
+    }
+	//................................................
+	// newBarVisMaker - rewritten more abstractly to cut duplicative code.
+	//................................................
+	
+    function flexBarVisMaker (vis_id, type){ //stop using global data and use passed data
+		//type = "day of week", "month of year", "year", "time of day"
+		formatCount = d3.format(",.0f");
+		var margin = {top: 20, right: 10, bottom: 20, left: 10}; //weird syntax.... height and width?
+		var width = 250 - margin.left - margin.right; // better to get these from css than hard code...
+		var height = 120 - margin.top - margin.bottom;
+		var days = ['S','M','T','W','Th','F','S'];
+		var months = ['J','F','M','A','M','J','J','A','S','O','N','D'];
+
+		//fix this time... or drop entirely.
+		if (type == "day of week"){var this_domain = [0,8];} 
+		else if (type == "time of day"){var this_domain = [-1, 24];}
+		else if (type == "year"){var this_domain = [2013, 2018];}
+		else if (type == "month of year"){var this_domain = [0, 13];}
+		// see here for bar charts
+		
+		//better to use the nested data here
+		var x = d3.scaleLinear()
+			.domain(this_domain) // want to be smarter than numbers here
+			.rangeRound([0, width], 0.1);
+	
+		var y = d3.scaleLinear() //,maybe better to set domain below...
+			.range([height, 0]);
+
+		//need to generalize this
+		var svg = d3.select('#'+vis_id) //find svg of interest
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	
+		//fix bottom axis
+		svg.append("g")
+			.attr("class", "axis axis--x")
+			.attr("transform", "translate(0," + height + ")")
+			.attr("font-size",6);		
+		
+		if (type == "day of week"){svg.select(".axis--x").call(d3.axisBottom(x).tickFormat(function(d) { return days[d-1];}));} 
+		else if (type == "time of day"){svg.select(".axis--x").call(d3.axisBottom(x).tickFormat(d3.format(".0f")));}
+		else if (type == "year"){svg.select(".axis--x").call(d3.axisBottom(x).tickValues([2014,2015,2016,2017]).tickFormat(d3.format(".0f")));}
+		else if (type == "month of year"){svg.select(".axis--x").call(d3.axisBottom(x).tickFormat(function(d) { return months[d-1];}));} 
+		//From David: .tickFormat(function(d) { return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d]; });
+		
+		//here? .axis.tickFormat(d3.format("f")
+ 		// https://stackoverflow.com/questions/16179021/d3-js-specify-text-for-x-axis
+		// https://bl.ocks.org/mbostock/3259783
+
+		this.render = function(_subset, data){
+			console.log(type);
+			//be smarter here. create a render_all_viz function, then move d3.csv to bottom
+	
+			//if else on "all" goes here
+			if(_subset == "All"){ var data_subset=data; }
+			else { var data_subset=data.filter(function(d){return (d.id==_subset);});}
+
+			if (type == "day of week"){var datepart_array = data_subset.map(function(d) {return (d.date.getDay()+1);});} 
+			else if (type == "time of day"){var datepart_array = data_subset.map(function(d) {return (d.date.getHours());});}
+			else if (type == "year"){var datepart_array = data_subset.map(function(d) {return (d.date.getFullYear());});}
+			else if (type == "month of year"){var datepart_array = data_subset.map(function(d) {return (d.date.getMonth()+1);});}
+		
+			var nested_data = d3.nest() //flexibly nest and roll-up
+				.key(function(d) { return d; })
+				.sortKeys(d3.ascending)
+				.rollup(function(leaves) { return leaves.length; })
+				.entries(datepart_array);
+			//On nesting : http://bl.ocks.org/phoebebright/raw/3176159/
+			var bar_width = width / (nested_data.length + 1);
+
+			//var bins = histogram(data_subset);
+			//x.domain(nested_data.map(function(d) {return d.key;})); //nope.
+			y.domain([0, d3.max(nested_data, function(d) { return d.value; })+30]); 
+	
+			var bar = svg.selectAll(".bar") //select all bars in my svg
+				.remove()
+				.exit()
+				.data(nested_data);
+				//.data(nested_data, function (d) {return _subset;});
+	
+			bar.enter().append("rect")
+				//.attr("x1", function(d){return d.key})
+				//.attr("x0", function(d){return d.key})
+				.attr("class", "bar")
+				.attr("value", function(d){return d.value})
+				.attr("width", function(d) { return (bar_width*0.9); }) //why both width and x1,x0?
+				.attr("x", function(d){return x(d.key-0.5)})
+				.attr("fill",function(){return "#39F";}) //move to top
+				.attr("y", function(d){return y(0)})
+				.transition().duration(750)
+				.attr("y", function(d){return y(d.value)})
+				.attr("height", function(d) { return height-y(d.value); });	
+
+			//highlight max/min
+			var max = d3.max(nested_data, function(d) {return d.value;});
+			svg.selectAll("rect")
+				.filter(function(d) {return d.value == max;})
+				.attr("class", "bar max-bar")
+				.attr("fill", "#03F") //move to top
+
+			var min = d3.min(nested_data, function(d) {return d.value;});
+			svg.selectAll("rect")
+				.filter(function(d) {return d.value == min;})
+				.attr("class", "bar min-bar")
+				.attr("fill", "#B8D9FE") //move to top
+
+
+			var label=svg.selectAll(".text-label")
+				.remove()
+				.exit()
+				.data(nested_data, function (d) { return _subset;});
+	
+			label.enter().append("text")
+				.attr("class","text-label")
+				.attr("x", function(d) { return x(d.key); })
+				//.attr("y", 6)
+				//.attr("transform",function(d){return "translate(" + x(d.key) + "," + y(d.value) + ")";}) //why do I need to transform these?
+				.attr("y", function(d){return y(0)+6})
+				.transition().duration(750)
+				.attr("y", function(d) {return y(d.value)+6;})
+				
+				//.attr("y", function(d) {return(y(d.length + 6));})
+				.attr("dy", "-1em") //what is this for?
+				.attr("text-anchor", "middle")
+				.attr("font-size",8)
+				.attr("fill","#006")
+				.text(function(d) { return formatCount(d.value); });
+			
+
+			label.exit()
+				.remove();
+				
+			bar.exit()
+				.remove();
+		}
+    }
+
+	//................................................
+	// Dot viz (A)
+	//................................................
+    function dotVisMaker(vis_id, filterable) {
+		var margin = {top: 5, right: 5, bottom: 5, left: 5}; //weird syntax.... height and width?
+		var width = 350 - margin.left - margin.right; // better to get these from css than hard code...
+		var height = 250 - margin.top - margin.bottom;
+
+		if(filterable == "filterable"){	var maxRadius = height * 0.1; ; var minRadius = 3;		
+		} else { var maxRadius = height * .25; var minRadius = 5;}
+		
+		var svg = d3.select('#'+vis_id) //find svg of interest
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+			//.attr("transform", "translate(" + margin.left + "," + margin.top + ")"); //from column code
+			.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')'); 
+			//^^ what is this doing?
+
+	    // Define the div for the tooltip
+	    var div = d3.select("body").append("div")
+			.attr("class", "tooltip")
+			.style("opacity", 0);
+
+		this.render = function(_subset, data){ //note for the first one, really just want not to filter
+			if(filterable == "filterable"){
+				if(_subset == "All"){ var data_subset=data; }
+				else { var data_subset=data.filter(function(d){return (d.id==_subset);});}
+			} else { var data_subset=data; }
+	
+			//d3.select("#SVG_id").remove();
+			//var svg = d3.select("body").append("svg")
+
+			//What does this do? Why do I need to define this so early?
+			//var n = 500, // total number of circles
+			//	m = 30; // number of distinct clusters
+			var n = data_subset.length;
+			var m = data_subset.length; //not clustering. confusing.
+
+			//var color = d3.scaleOrdinal(d3.schemeCategory10) //swap this color out for pct
+			//	.domain(d3.range(m));
+			var color = d3.scaleLinear()
+			    .domain([0, 50, 100])
+			    .range(["blue", "white", "green"]);
+			//http://bl.ocks.org/jfreyre/b1882159636cc9e1283a
+			//https://stackoverflow.com/questions/22893789/d3-color-scale-linear-with-multiple-colors
+			
+			// The largest node for each cluster. ????
+			var clusters = new Array(m);
+
+			var radiusScale = d3.scaleLinear()
+				.domain(d3.extent(data_subset, function (d) {return +d.n;}))
+				.range([minRadius, maxRadius]);
+	
+			//want to have a color scale in here somewhere
+			//this chain is a little confusing to me
+			var nodes = data_subset.map(function (d) {
+				var scaledRadius = radiusScale(+d.n);
+				var i = d.id,
+					r = scaledRadius,
+					category = d.id,
+					title = d.id,
+					views = +d.n,
+					pct=+d.pct,
+					d = {cluster: i, intervention: d.id, indication:d.indication, radius: scaledRadius, n:+d.n, pct:+d.pct};
+				if (!clusters[i] || (r > clusters[i].radius)) clusters[i] = d; //what is this doing? why can't it accept d.id directly?
+				return d;
+			});  //would be nice to cluster by score... categorical clustering only?
+	
+			console.log(nodes);
+	
+			var forceCollide = d3.forceCollide()
+				.radius(function (d) {return d.radius + 1.5;})
+				.iterations(1);
+	
+			var force = d3.forceSimulation()
+				.nodes(nodes)
+				.force("center", d3.forceCenter())
+				.force("collide", forceCollide)
+				.force("cluster", forceCluster)
+				.force("gravity", d3.forceManyBody(20)) //formerly 30
+				.force("x", d3.forceX().strength(1))
+				.force("y", d3.forceY().strength(1)) //used to be .7
+				.on("tick", tick);
+
+			if(filterable == "filterable"){ svg.selectAll("circle").remove();} //clear them.
+
+            var circle = svg.selectAll("circle")
+                .data(nodes)
+                .enter().append("circle")
+				.attr("class", "dot")
+                .attr("r", function (d) {return d.radius; })
+                .attr("intervention", function (d) {return d.id; })
+                //.style("fill", function (d) { return color(d.cluster); }) //here's where I'll change fill
+                .style("fill", function (d) { return color(d.pct); }) //here's where I'll change fill
+				// add tooltips to each circle
+				.on("click", function (d) {
+					if(d.intervention != _subset){ // a click on a new intervention. Switch.
+						document.getElementById('int_select').value = d.intervention;
+						shared_data.applyFilter(d.intervention); // trigger switch
+					}
+				})
+				.on("mouseover", function (d) {
+					svg.selectAll("circle")
+						.filter(function(e) {return e.intervention == d.intervention & e.indication == d.indication;}) //highlighter					
+						.style("fill", "yellow")						
+						.attr("class", "dot highlight-dot");						
+					div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+					div.html("Int:" + d.intervention + "<br/>Ind: " + d.indication + "<br/>N:" + d.n + "<br/>% Improved:" + d.pct)
+                        .style("left", (d3.event.pageX) + "px")
+                        .style("top", (d3.event.pageY - 28) + "px");
+                })
+                .on("mouseout", function (d) {
+					svg.selectAll("circle")
+						.style("fill", function (d) { return color(d.pct); })
+						.attr("class", "dot");
+                    div.transition()
+                        .duration(500)
+                        .style("opacity", 0);
+                });
+
+			svg.selectAll("circle")
+				//.style("fill", "#39F") //here's where I'll change fill
+				.style("stroke", "none"); //updates
+
+			svg.selectAll("circle")
+				.filter(function(d) {return d.intervention == _subset;}) //highlighter
+				.attr("class", "dot selected-dot")
+				//.style("fill", "#03F") //here's where I'll change fill
+				.style("stroke", "black")
+				.style("stroke-width", 2);
+				
+				
+			console.log(nodes);
+
+            function tick() {
+                circle
+                    .attr("cx", function (d) {
+                        return d.x;
+                    })
+                    .attr("cy", function (d) {
+                        return d.y;
+                    });
+            }
+            function forceCluster(alpha) {
+                for (var i = 0, n = nodes.length, node, cluster, k = alpha * 1; i < n; ++i) {
+                    node = nodes[i];
+                    cluster = clusters[node.cluster];
+                    node.vx -= (node.x - cluster.x) * k;
+                    node.vy -= (node.y - cluster.y) * k;
+                }
+            }
+        }
+	}
+	
+	//................................................
+	// Run
+	//................................................
+	var bar_vis = new barVisMaker("bars_all_svg");
+	var year_vis = new flexBarVisMaker("bars_year_svg", "year");
+	var monthofyear_vis = new flexBarVisMaker("bars_monthofyear_svg", "month of year");
+	var dayofweek_vis = new flexBarVisMaker("bars_dayofweek_svg", "day of week");
+	var timeofday_vis = new flexBarVisMaker("bars_timeofday_svg", "time of day");
+	
+	var dot_vis_a = new dotVisMaker("dot_vis_a_svg", "not filterable"); // eventually try to reuse for second one
+	var dot_vis_b = new dotVisMaker("dot_vis_b_svg", "filterable"); // eventually try to reuse for second one
+	
+	var shared_data = new sharedData([bar_vis, year_vis, monthofyear_vis, dayofweek_vis, timeofday_vis, dot_vis_a, dot_vis_b]);
+
+	//load functions
+	//load data
+	
+	//call initial values
+</script>
+</body>

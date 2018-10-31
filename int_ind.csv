@@ -1,0 +1,272 @@
+id,indication,n,n_good,pct
+12 Lead ECG - Obtained,Abdominal Pain,1005,0,0
+12 Lead ECG - Obtained,Altered Mental Status,1363,0,0
+12 Lead ECG - Obtained,Bradycardia,94,0,0
+12 Lead ECG - Obtained,Cardiac Arrest,82,0,0
+12 Lead ECG - Obtained,Chest Pain,2503,0,0
+12 Lead ECG - Obtained,Drowning,1,0,0
+12 Lead ECG - Obtained,Electrical/Chemical Burn,6,0,0
+12 Lead ECG - Obtained,Hypertention,221,0,0
+12 Lead ECG - Obtained,Hyperthermia,34,0,0
+12 Lead ECG - Obtained,Hypotension,192,0,0
+12 Lead ECG - Obtained,NA,7,0,0
+12 Lead ECG - Obtained,Other,2569,0,0
+12 Lead ECG - Obtained,Overdose/Toxic Ingestion,260,0,0
+12 Lead ECG - Obtained,Pt Recieved Epi,66,0,0
+12 Lead ECG - Obtained,Respiratory Distress,1212,0,0
+12 Lead ECG - Obtained,Stroke,277,0,0
+12 Lead ECG - Obtained,SVT,137,0,0
+12 Lead ECG - Obtained,Syncope / Near Syncope,1223,0,0
+12 Lead ECG - Obtained,V-Tach,22,0,0
+Acetaminophen (Tylenol),Fever,132,19,14.4
+Acetaminophen (Tylenol),Pain Control,53,15,28.3
+Adenosine,1st Deg. AV Block,1,1,100
+Adenosine,Atrial Fib./Ectopy,4,0,0
+Adenosine,Atrial Fibrillation,4,0,0
+Adenosine,Atrial Flutter,2,2,100
+Adenosine,Increased BP,1,1,100
+Adenosine,No Change,60,0,0
+Adenosine,NSR,21,21,100
+Adenosine,NSR/Ectopy,1,1,100
+Adenosine,PSVT,1,1,100
+Adenosine,PSVT/Ectopy,1,1,100
+Adenosine,Sinus Brady/Ectopy,1,1,100
+Adenosine,Sinus Tach/Ectopy,1,1,100
+Adenosine,SinusTach,20,20,100
+Adenosine,Wide Comp./Unknown Etiol.,1,0,0
+Airway - BVM,Respiratory Distress,52,0,0
+Airway-Nasal,Cardiac Arrest,28,0,0
+Airway-Nasal,semi-conscious,1,0,0
+Airway-Nasal,Unconscious/ Breathing/No Gag Reflex,33,0,0
+Airway-Nasal,Unconscious/Breathing/Gag Reflex,93,0,0
+Airway-Nasal,Unconscious/Unresponsive,129,0,0
+Airway-Oral,Cardiac Arrest,76,0,0
+Airway-Oral,Unconscious/ Breathing/No Gag Reflex,18,0,0
+Airway-Oral,Unconscious/Breathing/Gag Reflex,4,0,0
+Airway-Oral,Unconscious/Unresponsive,33,0,0
+Albuterol,absent lung sounds,2,0,0
+Albuterol,breathing difficulty,1,0,0
+Albuterol,"Breathing difficulty, Rhonchi",2,1,50
+Albuterol,COPD pt not mving much air in the bases,1,1,100
+Albuterol,DIMINESHED,1,1,100
+Albuterol,Diminished,186,133,71.5
+Albuterol,diminished lung sounds,1,1,100
+Albuterol,Dyspnea,1,0,0
+Albuterol,ETCO2 bronchospasm,1,1,100
+Albuterol,Little air movement COPD,1,1,100
+Albuterol,Regularly prescribed treatment,1,1,100
+Albuterol,Rhonchi,7,5,71.4
+Albuterol,rhonci,1,0,0
+Albuterol,Shark Fin Waveform Capnography,1,1,100
+Albuterol,sharkfin waveform,1,1,100
+Albuterol,SOB,3,2,66.7
+Albuterol,SOB w/ Rhonchi,1,1,100
+Albuterol,Wheezing,1595,1304,81.8
+Albuterol,work of breathing,2,2,100
+Amiodarone,V-Fib,75,11,14.7
+Amiodarone,V-Tach,19,8,42.1
+Aspirin,Chest Pain,1651,330,20
+Aspirin,Dispatch advised,1,0,0
+Aspirin,ECG Changes,1,0,0
+Aspirin,Suspected Cardiac Event,469,36,7.7
+Aspirin,Tachycardia,1,0,0
+Atropine,Asystole,2,0,0
+Atropine,Symptomatic Bradycardia,70,32,45.7
+BIAD - King,Cardiac Arrest,227,0,0
+BIAD - King,Respiratory Arrest,11,0,0
+Bleeding Controlled,Bleeding,1102,0,0
+Calcium Chloride,Cardiac Arrest,4,0,0
+Calcium Chloride,Hyperkalemia,52,3,5.8
+Cardioversion,A-Fib / A-Flutter,2,0,0
+Cardioversion,PSVT,9,6,66.7
+Cardioversion,V-Tach,7,3,42.9
+Chest Decompression,Absent Breath Sounds Bilaterally,4,0,0
+Chest Decompression,Absent Breath Sounds Left,10,0,0
+Chest Decompression,Absent Breath Sounds Right,6,0,0
+Chest Decompression,Cardiac Arrest,2,0,0
+Chest Decompression,"decreased, cardiac arrest",1,0,0
+Chest Decompression,Subcutaneous Emphsema,1,0,0
+Chest Decompression,Unequal Chest Rise,4,0,0
+Chest Decompression,V-Fib to PEA.,1,0,0
+Cold Pack,Bleeding control,1,0,0
+Cold Pack,Cooling after heat exposure,1,1,100
+Cold Pack,cooling measures after heat exposure,1,1,100
+Cold Pack,Epistaxis,3,1,33.3
+Cold Pack,Fever Control,35,14,40
+Cold Pack,for comfort measures,1,0,0
+Cold Pack,Induced Hypothermia,1,0,0
+Cold Pack,overheated,1,0,0
+Cold Pack,Pain Control,578,310,53.6
+Cold Pack,Swelling Control,326,138,42.3
+CPAP,Respiratory Distress,118,0,0
+CPR,Adult Arrest,95,57,60
+CPR,Infant Arrest,1,0,0
+CPR,Pediatric Arrest,3,2,66.7
+Cricothyrotomy,Airway Trauma,1,0,0
+Defibrillation,"AED First respond, shock advised",1,0,0
+Defibrillation,Converts V-Fib,12,1,8.3
+Defibrillation,No Change,9,0,0
+Defibrillation,PEA,1,0,0
+Defibrillation,Unspecified Vent. Rhythm,7,0,0
+Defibrillation,V-Fib,256,17,6.6
+Defibrillation,V-Tach,30,3,10
+Dextrose 10%,Cardiac Arrest,9,0,0
+Dextrose 10%,Hypoglycemia,279,269,96.4
+Dextrose 10%,Unconscious Unknown,3,3,100
+Diazepam (Valium),Sedation,11,10,90.9
+Diazepam (Valium),Seizure,17,13,76.5
+Diltiazem (Cardizem),A Flutter with RVR,1,1,100
+Diltiazem (Cardizem),A-Fib,1,1,100
+Diltiazem (Cardizem),A-Fib w/ RVR,64,43,67.2
+Diltiazem (Cardizem),A-flutter,1,1,100
+Diltiazem (Cardizem),SVT,7,4,57.1
+Diphenhydramine (Benadryl),Allergic Reaction,266,174,65.4
+Diphenhydramine (Benadryl),Dystonic Reaction,5,5,100
+Dopamine,Cardiogenic Shock,7,4,57.1
+Dopamine,Hypotension,14,9,64.3
+ED Notification,Consult/Other,357,0,0
+ED Notification,NULL,413,0,0
+ED Notification,Sepsis,18,0,0
+ED Notification,STEMI,73,0,0
+ED Notification,Stroke,114,0,0
+ED Notification,Trauma,76,0,0
+"Epinephrine 1:1,000",Acute Asthma,28,14,50
+"Epinephrine 1:1,000",Allergic Reaction,57,40,70.2
+"Epinephrine 1:1,000",Anaphylaxis,38,35,92.1
+"Epinephrine 1:1,000",Stridor,3,2,66.7
+"Epinephrine 1:1,000",Stridor from croup,1,1,100
+"Epinephrine 1:1,000","wheezing, ronchi, rales with no improvement",1,1,100
+"Epinephrine 1:10,000",Cardiac Arrest,1311,138,10.5
+"Epinephrine 1:10,000",resp arrest,2,0,0
+Epinephrine Drip,Allergic Reaction,7,5,71.4
+Epinephrine Drip,arrest,1,0,0
+Epinephrine Drip,Bradycardia,1,1,100
+Epinephrine Drip,Low BP,1,1,100
+Epinephrine Drip,post arrest,1,1,100
+EtCO2,NA,1061,0,0
+External Cardiac Pacing,3rd Deg. AV Block,12,6,50
+External Cardiac Pacing,bradycardia/hypotension,1,1,100
+External Cardiac Pacing,Junctional Rhythm,6,3,50
+External Cardiac Pacing,Junctional Rhythm/Ectopy,1,1,100
+External Cardiac Pacing,No Change,7,0,0
+External Cardiac Pacing,Pacer Rhythm,4,4,100
+External Cardiac Pacing,PEA,2,1,50
+External Cardiac Pacing,Sinus Brady,21,12,57.1
+External Cardiac Pacing,Sinus Brady/Ectopy,2,0,0
+External Cardiac Pacing,Unspecified Vent. Rhythm,3,3,100
+External Cardiac Pacing,Wide Comp./Unknown Etiol.,2,1,50
+Fentanyl,NA,2,0,0
+Fentanyl,Pain management,375,0,0
+Glucagon,Altered LOC,4,1,25
+Glucagon,Hypoglycemia,121,87,71.9
+Haloperidol (Haldol),Sedation/Chemical Restraint,79,54,68.4
+Hot Pack,Back Pain,1,1,100
+Hot Pack,Cold from laying on the ground,1,1,100
+Hot Pack,Heating IV Fluid,7,6,85.7
+Hot Pack,Hypothermia,32,27,84.4
+Hot Pack,Muscle spasm,1,0,0
+Hot Pack,Pain,8,5,62.5
+Hot Pack,Pain control,5,4,80
+Hot Pack,Pain Management,1,0,0
+Hot Pack,Pain Relief,2,2,100
+Hot Pack,Pt cold and asked for one,1,1,100
+Hot Pack,pt request,1,0,0
+Ibuprofin (Motrin),Fever,60,9,15
+Ibuprofin (Motrin),Pain Control,153,44,28.8
+Induced Hypothermia,"ROSC in comatose, intubated patient",28,0,0
+Intubation,Airway Obstruction,6,0,0
+Intubation,Cardiac Arrest,182,0,0
+Intubation,NA,1,0,0
+Intubation,Respiratory Arrest,24,0,0
+Intubation,Respiratory Distress,27,0,0
+Intubation,Unconsciousness,19,0,0
+Irrigation,Cooling,1,0,0
+Irrigation,Eye Irrigation,15,0,0
+Irrigation,Wound Management,43,0,0
+IV/IO,Venous Access,19202,0,0
+Ketorolac (Toradol),Pain Control,413,305,73.8
+Lidocaine,Numbing for IO infusion,2,1,50
+Magnesium Sulfate,COPD/Asthma,34,27,79.4
+Magnesium Sulfate,Eclampsia,3,2,66.7
+Magnesium Sulfate,Refractory V-Fib,1,0,0
+Magnesium Sulfate,respiratory distress,1,1,100
+Magnesium Sulfate,Torsades de Pointes,4,2,50
+Methylprednisolone,Adrenal Insufficiency,1,0,0
+Methylprednisolone,Allergic Reaction,60,21,35
+Methylprednisolone,Respiratory Distress,163,79,48.5
+Methylprednisolone,Wheezing,211,112,53.1
+Midazolam (Versed),Sedation,264,188,71.2
+Midazolam (Versed),Seizure,228,164,71.9
+Morphine Sulfate,Chest Pain,177,109,61.6
+Morphine Sulfate,Obvious Fx,2,2,100
+Morphine Sulfate,Pain Contol,3169,2215,69.9
+Morphine Sulfate,Pulmonary Edema,6,5,83.3
+Morphine Sulfate,seizure,1,1,100
+NA,NA,1,0,0
+Naloxone (Narcan),Altered LOC,72,41,56.9
+Naloxone (Narcan),inability to ventilate/oxygenate,1,0,0
+Naloxone (Narcan),lethargy,1,0,0
+Naloxone (Narcan),Narcotic Overdose,164,130,79.3
+Naloxone (Narcan),Unconscious,163,48,29.4
+NG/OG Tube,Cardiac Arrest,19,0,0
+Nitroglycerin,Back Pain/Possible Cardiac,1,0,0
+Nitroglycerin,Chest Pain,2776,1682,60.6
+Nitroglycerin,CHF & HTN,1,1,100
+Nitroglycerin,esophageal spasms,1,0,0
+Nitroglycerin,Hypertension,24,16,66.7
+Nitroglycerin,Pulmonary Edema,216,152,70.4
+Nitroglycerin,Resp Distress,4,4,100
+Nitroglycerin,"Resp Distress, poss cardiac event",1,0,0
+Nitroglycerin,STEMI,2,0,0
+Nitroglycerin,Suspected Cardiac Event,3,1,33.3
+OB Delivery,Cephalic,5,5,100
+OB Delivery,Placenta,2,2,100
+Ondansetron (Zofran),extreme nausea when moving,1,1,100
+Ondansetron (Zofran),nausea,64,57,89.1
+Ondansetron (Zofran),nausea and spinal immobilization,1,1,100
+Ondansetron (Zofran),Nausea only,1,1,100
+Ondansetron (Zofran),"Nausea, with feeling of impending emisis.",1,1,100
+Ondansetron (Zofran),Nausea/Vomiting,1,1,100
+Ondansetron (Zofran),Nauseated,1,1,100
+Ondansetron (Zofran),near vomiting,1,1,100
+Ondansetron (Zofran),Patient Hx of extreme N/V with Morphine admin.,1,0,0
+Ondansetron (Zofran),Vomiting,1069,788,73.7
+Open Airway,Respiratory Distress,30,20,66.7
+Oral Glucose,Altered LOC,5,2,40
+Oral Glucose,Hypoglycemia,228,133,58.3
+Oxygen,Continous o2,1,0,0
+Oxygen,Home oxygen,1,0,0
+Oxygen,home oxygen per PCP,1,1,100
+Oxygen,Low SPO2,2068,1575,76.2
+Oxygen,NA,1,1,100
+Oxygen,Pain Relief,1,1,100
+Oxygen,patient request,1,1,100
+Oxygen,Patient request for comfort.,1,1,100
+Oxygen,Protocol,2424,697,28.8
+Oxygen,Pt nomally on 2 LPM,1,0,0
+Oxygen,Pt on continuous O2,1,1,100
+Oxygen,request,2,0,0
+Oxygen,Respiratory Arrest,220,76,34.5
+Oxygen,Respiratory Difficulty,1738,1215,69.9
+Oxygen,To calm pt down,1,0,0
+Oxymetazoline (Afrin),Epistaxis,53,31,58.5
+Oxymetazoline (Afrin),Nasal Intubation,1,0,0
+Restraints,Behavioral,17,0,0
+Restraints,Combative,48,0,0
+Restraints,Law Enforcement,12,0,0
+Restraints,Pt. attempting removal of med. necessary device,6,0,0
+Restraints,Pt. attempting to hurt self/others,6,0,0
+Sodium Bicarbonate,Acidosis (Severe),8,4,50
+Sodium Bicarbonate,Cardiac Arrest,191,31,16.2
+Spinal Immobilization,Trauma,2389,0,0
+Splinting,Bandaging,20,0,0
+Splinting,Possible FX/Dislocation,477,0,0
+Suction,airway obstruction,1,0,0
+Suction,blood in tube,1,1,100
+Suction,Fluid in Airway,268,213,79.5
+Suction,Mucus,60,50,83.3
+Vagal Maneuver,Accelerated Junctional,1,1,100
+Vagal Maneuver,Atrial Fibrillation with RVR,1,0,0
+Vagal Maneuver,sinus tachycardia,1,1,100
+Vagal Maneuver,SVT,35,2,5.7
+Vagal Maneuver,tachycardic,1,1,100
